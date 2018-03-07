@@ -7,13 +7,13 @@
 
 #include "cocos2d.h"
 
-class ActionScene: public cocos2d::Layer {
+class ActionScene: public cocos2d::Scene {
     
 public:
     static cocos2d::Scene* createScene();
     virtual bool init();
-    CREATE_FUNC(ActionScene);
     bool onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* event);
+    CREATE_FUNC(ActionScene);
 private:
     cocos2d::Sprite* car;
 };

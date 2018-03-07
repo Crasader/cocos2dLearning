@@ -1,5 +1,8 @@
 #include "HelloWorldScene.h"
 #include "SimpleAudioEngine.h"
+#include "ActionScene.h"
+#include "ui/CocosGUI.h"
+#include "TouchScene.h"
 
 USING_NS_CC;
 
@@ -55,6 +58,40 @@ bool HelloWorld::init()
     auto menu = Menu::create(closeItem, NULL);
     menu->setPosition(Vec2::ZERO);
     this->addChild(menu, 1);
+    
+    //Push Button
+    auto pushItem = ui::Button::create();
+    pushItem->cocos2d::Node::setPosition(this->getBoundingBox().getMidX(), this->getBoundingBox().getMidY());
+    pushItem->cocos2d::Node::setContentSize(Size(100, 50));
+    pushItem->setTitleText("Push");
+    pushItem->addTouchEventListener([&](Ref* sender, cocos2d::ui::Widget::TouchEventType type){
+        switch (type)
+        {
+            case ui::Widget::TouchEventType::BEGAN:
+                break;
+            case ui::Widget::TouchEventType::ENDED:
+                HelloWorld::pushToSecondScene(sender);
+                break;
+            default:
+                break;
+        }
+    });
+    this->addChild(pushItem);
+    
+    //add TouchScreen
+    auto touchLayer = TouchScene::create();
+    touchLayer->setPosition(this->getBoundingBox().getMidX(), this->getBoundingBox().getMidY());
+    touchLayer->setAnchorPoint(Vec2(0.5, 0.5));
+    this->addChild(touchLayer);
+    
+//    auto pushItem = MenuItemLabel::create(Label::createWithSystemFont("Push", "Arial", 20),
+//                                          CC_CALLBACK_1(HelloWorld::pushToSecondScene, this));
+//
+//    pushItem->setPosition(this->getBoundingBox().getMidX(), this->getBoundingBox().getMidY());
+//
+//    this->addChild(pushItem);
+    
+    
 
     /////////////////////////////
     // 3. add your codes below...
@@ -91,17 +128,17 @@ bool HelloWorld::init()
 //        // add the sprite as a child to this layer
 //        this->addChild(sprite, 0);
 //    }
-    auto sprite = Sprite::create("sc.png");
-    if (sprite == nullptr)
-    {
-        problemLoading("'sc.png'");
-    }
-    else
-    {
-        sprite->setPosition(0, 0);
-        sprite->setAnchorPoint(Vec2(0,0));
-        this->addChild(sprite, 0);
-    }
+//    auto sprite = Sprite::create("sc.png");
+//    if (sprite == nullptr)
+//    {
+//        problemLoading("'sc.png'");
+//    }
+//    else
+//    {
+//        sprite->setPosition(0, 0);
+//        sprite->setAnchorPoint(Vec2(0,0));
+//        this->addChild(sprite, 0);
+//    }
     return true;
 }
 
@@ -119,6 +156,11 @@ void HelloWorld::menuCloseCallback(Ref* pSender)
 
     //EventCustom customEndEvent("game_scene_close_event");
     //_eventDispatcher->dispatchEvent(&customEndEvent);
+}
 
-
+void HelloWorld::pushToSecondScene(Ref* pSender)
+{
+    auto actionScene = ActionScene::create();
+    
+    Director::getInstance()->replaceScene(TransitionSlideInT::create(1, actionScene));
 }

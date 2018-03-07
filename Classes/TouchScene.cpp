@@ -17,6 +17,10 @@ bool TouchScene::init()
     {
         return false;
     }
+    
+    auto colorLayer = LayerColor::create(Color4B::YELLOW, this->getBoundingBox().getMaxX(), this->getBoundingBox().getMaxY());
+    this->addChild(colorLayer);
+    this->setIgnoreAnchorPointForPosition(false);
     labelTouchInfo = Label::createWithSystemFont("Touch here to begin", "Arial", 12);
     labelTouchInfo->setPosition(Vec2(Director::getInstance()->getVisibleSize().width/2, Director::getInstance()->getVisibleSize().height/2));
     

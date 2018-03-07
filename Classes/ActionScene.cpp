@@ -6,6 +6,7 @@
 //
 
 #include "ActionScene.h"
+
 USING_NS_CC;
 
 Scene* ActionScene::createScene()
@@ -18,10 +19,9 @@ Scene* ActionScene::createScene()
 
 bool ActionScene::init()
 {
-    if ( !Layer::init() ) {
+    if ( !Scene::init() ) {
         return false;
-    }
-    
+    }    
     car = Sprite::create("veyron.png");
     car->setPosition(this->getBoundingBox().getMidX(), this->getBoundingBox().getMidY());
 //    car->setPosition(Vec2(0, 0));
@@ -33,7 +33,7 @@ bool ActionScene::init()
     
     _eventDispatcher->addEventListenerWithSceneGraphPriority(listener, this);
     
-    return true; 
+    return true;
 }
 
 bool ActionScene::onTouchBegan(Touch* touch, Event* event)
